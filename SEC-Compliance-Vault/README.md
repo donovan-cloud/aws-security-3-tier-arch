@@ -1,4 +1,4 @@
-# Project 19: Automated SEC/FINRA Audit Log Lock
+# Project: Automated SEC/FINRA Audit Log Lock
 
 ## Overview
 Implemented an immutable audit trail designed for SEC Rule 17a-4 compliance. This vault ensures that financial audit logs are protected by hardware-level WORM (Write Once, Read Many) storage.
