@@ -11,5 +11,4 @@ To design and implement a ransomware-resilient backup architecture that survives
 ## Proof of Implementation (Access Denied Test)
 The following screenshot demonstrates a system-enforced block. Even with **Root/Admin privileges**, the 'Delete' operation is programmatically disabled by the AWS Backup API.
 
-![Access Denied Proof](access_denied_screenshot.png)
 *Figure 1: Architectural denial of a manual deletion request on a compliant object.*
