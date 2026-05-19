@@ -1,13 +1,43 @@
-# Project: Automated SEC/FINRA Audit Log Vault (WORM)
+# Automated SEC/FINRA Regulatory Compliance Log Vault (WORM)
 
-## Executive Summary
-This project implements a high-stakes compliance architecture for financial services environments. By leveraging **S3 Object Lock** and **AWS CloudTrail**, I've created an immutable audit trail designed to satisfy the strict record-keeping requirements of **SEC Rule 17a-4(f)** and **FINRA Rule 4511**.
+## 📌 Architectural Overview
+This repository contains the infrastructure-as-code and configuration policies for an automated, regulatory-grade financial auditing log repository. Designed to meet the stringent data retention mandates of **SEC Rule 17a-4(f)** and **FINRA Rule 4511**, this architecture implements immutable Write-Once-Read-Many (WORM) storage, ensuring that systemic audit trails, transaction records, and cryptographic signatures are preserved with absolute zero-tamper guarantees.
 
-## Core Architectural Guardrails
-*   **WORM Storage (Write-Once-Read-Many)**: Implemented S3 Object Lock in **Compliance Mode**. Unlike Governance Mode, this setting cannot be bypassed by any user, including the Root administrator, ensuring absolute data integrity.
-*   **Log File Validation**: Enabled hash-based validation in AWS CloudTrail to provide an verifiable "chain of custody" for forensic audits.
-*   **Customer Managed Encryption**: Orchestrated a **Customer Managed Key (CMK)** via AWS KMS to ensure full technical sovereignty over data-at-rest.
+---
 
-## Proof of Implementation (Access Denied Test)
-The following screenshot demonstrates a system-enforced block. Even with **Root/Admin privileges**, a permanent deletion request of a protected version is denied by the AWS S3 API, proving the immutability of the vault.
+## 🏗️ Compliance Engineering & Immutability Guardrails
+
+The log storage subsystem leverages a multi-layered defense-in-depth framework to enforce data integrity and maintain a mathematically verifiable chain of custody:
+
+### 1. Object Lock Enforcement (WORM Strategy)
+* **Retention Mode:** Configured strictly in **Compliance Mode**. This enforces an immutable lock that cannot be bypassed or overwritten by any identity, including the root account or privileged administrators.
+* **Temporal Enforcement:** Hardened with a mandatory regulatory holding window to prevent premature data pruning or destruction.
+
+### 2. Cryptographic Integrity & Access Control
+* **Server-Side Encryption:** Enforced via customer-managed AWS KMS keys utilizing industry-standard AES-256 encryption.
+* **Key Lifecycle Management:** Implements automated annual key rotation policies with independent identity access barriers to decouple data management from cryptographic authorization.
+* **Access Control Baselines:** Enforces strict least-privilege Resource Policies, explicitly blocking destructive operations (`s3:DeleteObject`, `s3:DeleteObjectVersion`) globally.
+
+### 3. Log Stream Ingestion & Non-Repudiation
+* **Automated Aggregation:** Ingests event trails natively from infrastructure and application boundary controls into a single centralized vault.
+* **Digest Verification:** Generates cryptographic hashes for incoming log batches, ensuring any malicious data modification attempts trigger instant compliance alarms.
+
+---
+
+## 🔒 Threat Modeling & Integrity Mapping
+
+| Regulatory Risk | Architectural Mitigation Strategy |
+| :--- | :--- |
+| **Privileged Insider Threat** | Enforced S3 Object Lock in Compliance Mode; even compromised administrator credentials lack the privileges required to modify or destroy locked historical logs. |
+| **Data Exfiltration** | Tightened target repository bucket policies to explicitly deny data transfers outside the corporate organizational perimeter. |
+| **Log Injection / Alteration** | Implemented append-only transport pipelines, completely removing modifying operations from application ingestion roles. |
+| **Audit Trail Gaps** | Multi-region backup distribution paired with explicit lifecycle version tracking guarantees a permanent record of historical account state changes. |
+
+---
+
+## 📊 Business Value & Regulatory Alignment
+* **Mandate Compliance:** Directly satisfies **SEC 17a-4** and **FINRA 4511** structural storage standards for broker-dealers and asset management platforms.
+* **Audit Automation:** Reduces institutional liability during financial reviews by presenting a non-repudiation logging standard with zero reliance on manual human maintenance.
+
+---
 <img width="1470" height="956" alt="Screenshot 2026-05-11 at 3 49 11 PM" src="https://github.com/user-attachments/assets/01cadf14-57d6-472d-8925-a949b0cd6150" />
