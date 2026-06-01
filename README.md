@@ -40,7 +40,3 @@ The infrastructure is distributed across multiple Availability Zones (AZs) for h
 ## 📊 Business Value & Compliance Alignment
 * **FinTech Compliance Baseline:** Aligns directly with network segmentation requirements outlined in **PCI-DSS Requirement 1** and **SOC 2 Type II** trust principles.
 * **Blast Radius Reduction:** Micro-segmentation guarantees that a vulnerability exploitation at the web server layer cannot directly interface with or exfiltrate backend financial data stores.
-
----
-
-![Architecture Diagram](Untitled%20Diagram.drawio.png)
