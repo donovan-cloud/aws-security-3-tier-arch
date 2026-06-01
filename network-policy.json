@@ -1,0 +1,25 @@
+{
+  "SecurityGroupIngressRules": [
+    {
+      "Description": "Allow HTTPS from Internet Gateway to Presentation Tier ALB",
+      "IpProtocol": "tcp",
+      "FromPort": 443,
+      "ToPort": 443,
+      "CidrIp": "0.0.0.0/0"
+    },
+    {
+      "Description": "Allow App Tier Traffic strictly from Presentation Tier ALB Security Group",
+      "IpProtocol": "tcp",
+      "FromPort": 8080,
+      "ToPort": 8080,
+      "SourceSecurityGroupId": "sg-presentation-alb-isolated-id"
+    },
+    {
+      "Description": "Allow Database Tier Ingress strictly from private Application Tier Instances",
+      "IpProtocol": "tcp",
+      "FromPort": 5432,
+      "ToPort": 5432,
+      "SourceSecurityGroupId": "sg-application-tier-instances-id"
+    }
+  ]
+}
